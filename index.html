@@ -13,8 +13,8 @@
 	<SCRIPT>
 var voteIds = [];
 var votes = [];
+var originalTime = (new Date()).getTime();
 document.querySelector('BUTTON').onclick = function(){
-	var originalTime = (new Date()).getTime();
 	// Check that opening post and nation name values are entered
 	var nation = document.querySelector('#NAT').value;
 	var open = document.querySelector('#OPEN').value;
