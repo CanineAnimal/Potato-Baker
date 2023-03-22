@@ -30,7 +30,7 @@ document.querySelector('BUTTON').onclick = function(){
 			var request = new XMLHttpRequest();
 			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=the_strange_reality&q=messages&limit=100&offset=' + offset, false);
 			// Rate limit to avoid breaking API rules
-			while(originalTime > (new Date()).getTime() + 650)){};
+			while(originalTime > (new Date()).getTime() + 650){};
 			request.send();
 			originalTime = (new Date()).getTime();
 			var posts = request.responseXML.querySelectorAll('POST');
@@ -44,7 +44,7 @@ document.querySelector('BUTTON').onclick = function(){
 							// Vote is valid; check that nation is WA and still in TNP
 							var request1 = new XMLHttpRequest();
 							request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?nation=' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + '&q=wa+region', false);
-							while(originalTime > (new Date()).getTime() + 650)){};
+							while(originalTime > (new Date()).getTime() + 650){};
 							request1.send();
 							originalTime = (new Date()).getTime();
 							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
