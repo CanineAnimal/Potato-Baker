@@ -54,7 +54,8 @@ document.querySelector('BUTTON').onclick = function(){
 								console.log('Nation can vote.')
 								//Nation can vote; check whether nation has already voted
 								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
-									console.log('Nation has already voted.')
+									console.log('Nation ' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + ' has already voted.');
+									console.log(voteIds);
 									//Nation has already voted; remove previous vote
 									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
 									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
