@@ -39,11 +39,8 @@ document.querySelector('BUTTON').onclick = function(){
 				alert('Opening post not found.')
 			}else{
 				for(var item = 0; item < posts.length; item++){
-					console.log('Checking post ' + item);
 					if(voteId != 0){
-						console.log('Found vote.')
 						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + ' for') == 0){
-							console.log('Vote is for.')
 							// Vote is valid; check that nation is WA and still in TNP
 							var request1 = new XMLHttpRequest();
 							request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?nation=' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + '&q=wa+region', false);
@@ -51,11 +48,8 @@ document.querySelector('BUTTON').onclick = function(){
 							request1.send();
 							originalTime = (new Date()).getTime();
 							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
-								console.log('Nation can vote.')
 								//Nation can vote; check whether nation has already voted
 								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
-									console.log('Nation ' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + ' has already voted.');
-									console.log(voteIds);
 									//Nation has already voted; remove previous vote
 									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
 									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
@@ -73,7 +67,6 @@ document.querySelector('BUTTON').onclick = function(){
 							originalTime = (new Date()).getTime();
 							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
 								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
-									console.log('Nation has already voted.')
 									//Nation has already voted; remove previous vote
 									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
 									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
@@ -91,7 +84,6 @@ document.querySelector('BUTTON').onclick = function(){
 							originalTime = (new Date()).getTime();
 							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
 								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
-									console.log('Nation has already voted.')
 									//Nation has already voted; remove previous vote
 									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
 									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
@@ -102,11 +94,9 @@ document.querySelector('BUTTON').onclick = function(){
 						}
 					}
 					if(posts[item].id == open){
-						console.log('Found opening post!')
 						try{
 							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
 								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
-								console.log(voteId);
 							}else{
 								cont = false;
 							}
