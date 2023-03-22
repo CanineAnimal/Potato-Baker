@@ -143,13 +143,13 @@ document.querySelector('BUTTON').onclick = function(){
 		for(var item = 0; item < votes; item++){
 			if(votes[item] == 1){
 				document.querySelector('SPAN.FOR').innerHTML = Number.parseInt(document.querySelector('SPAN.FOR').innerHTML) + 1;
-				document.querySelector('UL.FOR').innerHTML += '<LI>' + voteIds[item] + '</LI>
+				document.querySelector('UL.FOR').innerHTML += '<LI>' + voteIds[item] + '</LI>';
 			}else if(votes[item] === 0){
 				document.querySelector('SPAN.ABSTAIN').innerHTML = Number.parseInt(document.querySelector('SPAN.ABSTAIN').innerHTML) + 1;
-				document.querySelector('UL.ABSTAIN').innerHTML += '<LI>' + voteIds[item] + '</LI>
+				document.querySelector('UL.ABSTAIN').innerHTML += '<LI>' + voteIds[item] + '</LI>';
 			}else if(votes[item] == -1){
 				document.querySelector('SPAN.AGAINST').innerHTML = Number.parseInt(document.querySelector('SPAN.AGAINST').innerHTML) + 1;
-				document.querySelector('UL.AGAINST').innerHTML += '<LI>' + voteIds[item] + '</LI>
+				document.querySelector('UL.AGAINST').innerHTML += '<LI>' + voteIds[item] + '</LI>';
 			}
 		}
 	}
