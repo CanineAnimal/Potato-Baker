@@ -49,7 +49,44 @@ document.querySelector('BUTTON').onclick = function(){
 							originalTime = (new Date()).getTime();
 							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
 								//Nation can vote; check whether nation has already voted
-								votesFor++;
+								votes[votes.length] = 1;
+								voteIds[voteIds.length] = request.responseXML.querySelectorAll('NATION')[item].innerHTML;
+								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
+									//Nation has already voted; remove previous vote
+									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+								}
+							}
+						}
+						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + 'against') == 0){
+							// Vote is valid; check that nation is WA and still in TNP
+							var request1 = new XMLHttpRequest();
+							request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?nation=' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + '&q=wa+region', false);
+							while(originalTime > (new Date()).getTime() + 650){};
+							request1.send();
+							originalTime = (new Date()).getTime();
+							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
+								//Nation can vote; check whether nation has already voted
+								votes[votes.length] = -1;
+								voteIds[voteIds.length] = request.responseXML.querySelectorAll('NATION')[item].innerHTML;
+								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
+									//Nation has already voted; remove previous vote
+									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+								}
+							}
+						}
+						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + 'abstain') == 0){
+							// Vote is valid; check that nation is WA and still in TNP
+							var request1 = new XMLHttpRequest();
+							request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?nation=' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + '&q=wa+region', false);
+							while(originalTime > (new Date()).getTime() + 650){};
+							request1.send();
+							originalTime = (new Date()).getTime();
+							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
+								//Nation can vote; check whether nation has already voted
+								votes[votes.length] = 0;
+								voteIds[voteIds.length] = request.responseXML.querySelectorAll('NATION')[item].innerHTML;
 								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
 									//Nation has already voted; remove previous vote
 									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
