@@ -140,7 +140,7 @@ document.querySelector('BUTTON').onclick = function(){
 			}
 		}
 		document.querySelector('.OUTPUT').innerHTML = '<SPAN CLASS="FOR">0</SPAN> votes for; <SPAN CLASS="AGAINST">0</SPAN> votes against; and <SPAN CLASS="ABSTAIN">0</SPAN> votes to abstain.<BR/>Votes for:<UL CLASS="FOR"></UL><BR/>Votes against:<UL CLASS="AGAINST"></UL><BR/>Votes to abstain:<UL CLASS="ABSTAIN"></UL>';
-		for(var item = 0; item < votes; item++){
+		for(var item = 0; item < votes.length; item++){
 			if(votes[item] == 1){
 				document.querySelector('SPAN.FOR').innerHTML = Number.parseInt(document.querySelector('SPAN.FOR').innerHTML) + 1;
 				document.querySelector('UL.FOR').innerHTML += '<LI>' + voteIds[item] + '</LI>';
