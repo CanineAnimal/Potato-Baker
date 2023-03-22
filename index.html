@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<TITLE>Potato Baker</TITLE>
+	</HEAD>
+	<BODY>
+		Enter opening RMB Post: <INPUT ID="OPEN"/>
+		<BR/>
+		Enter nation name: <INPUT ID="NAT"/>
+		<BR/>
+		<BUTTON>Run</BUTTON>
+	</BODY>
+	<SCRIPT>
+var voteIds = [];
+var votes = [];
+document.querySelector('BUTTON').onclick = function(){
+	var originalTime = (new Date()).getTime();
+	// Check that opening post and nation name values are entered
+	var nation = document.querySelector('#NAT').value;
+	var open = document.querySelector('#OPEN').value;
+	if(!nation){
+		alert('No nation name entered.');
+	}else if(!open){
+		alert('No opening RMB post entered.');
+	}else{
+		// Add loading text
+		document.body.innerHTML += '<BR/><BR/><SPAN CLASS="OUTPUT">Loading...</SPAN>';
+		// Define function to send request to NS API
+		function func1(offset, voteId){
+			var request = new XMLHttpRequest();
+			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=the_strange_reality&q=messages&limit=100&offset=' + offset, false);
+			// Rate limit to avoid breaking API rules
+			while(originalTime > (new Date()).getTime() + 650)){};
+			request.send();
+			originalTime = (new Date()).getTime();
+			var posts = request.responseXML.querySelectorAll('POST');
+			var continue = true;
+			if(posts.length == 0){
+				alert('Opening post not found.')
+			}else{
+				for(var item = 0; item < posts.length; item++){
+					if(voteId != 0){
+						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + 'for') == 0){
+							// Vote is valid; check that nation is WA and still in TNP
+							var request1 = new XMLHttpRequest();
+							request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?nation=' + request.responseXML.querySelectorAll('NATION')[item].innerHTML + '&q=wa+region', false);
+							while(originalTime > (new Date()).getTime() + 650)){};
+							request1.send();
+							originalTime = (new Date()).getTime();
+							if((request1.responseXML.querySelector('UNSTATUS').innerHTML == 'Non-member' || request1.responseXML.querySelector('UNSTATUS').innerHTML == 'WA Delegate') && request1.responseXML.querySelector('REGION').innerHTML == 'The Strange Reality'){
+								//Nation can vote; check whether nation has already voted
+								votesFor++;
+								if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
+									//Nation has already voted; remove previous vote
+									votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+									voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+								}
+							}
+						}
+					}
+					if(posts[item].id == open){
+						try{
+							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
+								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
+							}else{
+								continue = false;
+						}catch(e){
+							continue = false;
+						}
+					}
+				}
+				// Scan previous posts if opening post is not found
+				if(voteId == 0 && continue){
+					func1(offset + 100, 0);
+				}
+				// Rescan newer posts if opening post was found in previous scans
+				if(offset > 0 && continue){
+					func1(offset - 100, voteId);
+				}
+			}
+		}
+		// Actually send the request
+		try{
+			func1(0, 0);
+		}catch(e){
+			// Try again if no or invalid response is received, otherwise throw error
+			try{
+				func1(0, 0);
+			}catch(e){
+				alert('Could not receive proper response from the NS API.');
+			}
+		}
+	}
+}
+	</SCRIPT>
+</HTML>
