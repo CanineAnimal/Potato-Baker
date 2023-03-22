@@ -34,7 +34,7 @@ document.querySelector('BUTTON').onclick = function(){
 			request.send();
 			originalTime = (new Date()).getTime();
 			var posts = request.responseXML.querySelectorAll('POST');
-			var continue = true;
+			var cont = true;
 			if(posts.length == 0){
 				alert('Opening post not found.')
 			}else{
@@ -100,18 +100,18 @@ document.querySelector('BUTTON').onclick = function(){
 							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
 								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
 							}else{
-								continue = false;
+								cont = false;
 						}catch(e){
-							continue = false;
+							cont = false;
 						}
 					}
 				}
 				// Scan previous posts if opening post is not found
-				if(voteId == 0 && continue){
+				if(voteId == 0 && cont){
 					func1(offset + 100, 0);
 				}
 				// Rescan newer posts if opening post was found in previous scans
-				if(offset > 0 && continue){
+				if(offset > 0 && cont){
 					func1(offset - 100, voteId);
 				}
 			}
