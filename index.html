@@ -39,6 +39,7 @@ document.querySelector('BUTTON').onclick = function(){
 				alert('Opening post not found.')
 			}else{
 				for(var item = 0; item < posts.length; item++){
+					console.log('Checking post ' + item);
 					if(voteId != 0){
 						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + 'for') == 0){
 							// Vote is valid; check that nation is WA and still in TNP
@@ -96,9 +97,11 @@ document.querySelector('BUTTON').onclick = function(){
 						}
 					}
 					if(posts[item].id == open){
+						console.log('Found opening post!')
 						try{
 							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
 								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
+								console.log(voteId);
 							}else{
 								cont = false;
 							}
