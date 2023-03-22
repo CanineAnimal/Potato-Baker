@@ -119,11 +119,37 @@ document.querySelector('BUTTON').onclick = function(){
 		try{
 			func1(0, 0);
 		}catch(e){
-			// Try again if no or invalid response is received, otherwise throw error
+			// Try again if cannot run, otherwise throw error
 			try{
 				func1(0, 0);
 			}catch(e){
-				alert('Could not receive proper response from the NS API.');
+				alert('Failed to process or receive response from the NS API.');
+			}
+		}
+		//Update output
+		var votesFor = 0;
+		var votesAgainst = 0;
+		var votesAbstain = 0;
+		for(var item = 0; item < votes; item++){
+			if(votes[item] == 1){
+				votesFor++;
+			}else if(votes[item] === 0){
+				votesAbstain++;
+			}else if(votes[item] == -1){
+				votesAgainst++;
+			}
+		}
+		document.querySelector('.OUTPUT').innerHTML = '<SPAN CLASS="FOR">0</SPAN> votes for; <SPAN CLASS="AGAINST">0</SPAN> votes against; and <SPAN CLASS="ABSTAIN">0</SPAN> votes to abstain.<BR/>Votes for:<UL CLASS="FOR"></UL><BR/>Votes against:<UL CLASS="AGAINST"></UL><BR/>Votes to abstain:<UL CLASS="ABSTAIN"></UL>';
+		for(var item = 0; item < votes; item++){
+			if(votes[item] == 1){
+				document.querySelector('SPAN.FOR').innerHTML = Number.parseInt(document.querySelector('SPAN.FOR').innerHTML) + 1;
+				document.querySelector('UL.FOR').innerHTML += '<LI>' + voteIds[item] + '</LI>
+			}else if(votes[item] === 0){
+				document.querySelector('SPAN.ABSTAIN').innerHTML = Number.parseInt(document.querySelector('SPAN.ABSTAIN').innerHTML) + 1;
+				document.querySelector('UL.ABSTAIN').innerHTML += '<LI>' + voteIds[item] + '</LI>
+			}else if(votes[item] == -1){
+				document.querySelector('SPAN.AGAINST').innerHTML = Number.parseInt(document.querySelector('SPAN.AGAINST').innerHTML) + 1;
+				document.querySelector('UL.AGAINST').innerHTML += '<LI>' + voteIds[item] + '</LI>
 			}
 		}
 	}
