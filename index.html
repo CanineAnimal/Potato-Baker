@@ -92,6 +92,14 @@ document.querySelector('BUTTON').onclick = function(){
 								voteIds[voteIds.length] = request.responseXML.querySelectorAll('NATION')[item].innerHTML;
 							}
 						}
+						if(request.responseXML.querySelectorAll('MESSAGE')[item].innerHTML.toLowerCase().indexOf('<![cdata[~' + voteId + ' present') == 0){
+							//Remove previous vote, if any
+							if(voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML) != -1){
+								//Nation has already voted; remove previous vote
+								votes[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+								voteIds[voteIds.indexOf(request.responseXML.querySelectorAll('NATION')[item].innerHTML)] = null;
+							}
+						}
 					}
 					if(posts[item].id == open){
 						try{
