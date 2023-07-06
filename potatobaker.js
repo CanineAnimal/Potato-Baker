@@ -16,7 +16,7 @@ document.querySelector('BUTTON').onclick = function(){
 		// Define function to send request to NS API
 		function func1(offset, voteId){
 			var request = new XMLHttpRequest();
-			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=the_north_pacific&q=messages&limit=100&offset=' + offset + '&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=tnp_gameside_voting_box&q=messages&limit=100&offset=' + offset + '&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
 			// Rate limit to avoid breaking API rules
 			while(originalTime + 650 > (new Date()).getTime()){}; 
 			request.send();
