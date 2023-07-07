@@ -77,7 +77,7 @@ document.querySelector('BUTTON').onclick = function(){
       // Generate BBCode for RMB post
       bbCode = '~' + voteId + '~\n\nThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\n\n[b]Resolution name:[/b] '
         + rezzyXml.querySelector('NAME').innerHTML
-        + '\n[b]Category:[/b]'
+        + '\n[b]Category:[/b] '
         + rezzyXml.querySelector('CATEGORY').innerHTML
         + (function(){
           // Check if SC resolution has nation target
@@ -111,7 +111,7 @@ document.querySelector('BUTTON').onclick = function(){
             return output_thingy;
           }else if(rezzyXml.querySelectorAll('COAUTHOR > N').length == 1){
             // There is one co-author, so list it
-            return '[b]Co-author:[/b] ' + rezzyXml.querySelector('COAUTHOR > N').innerHTML
+            return '[b]Co-author:[/b] [nation]' + rezzyXml.querySelector('COAUTHOR > N').innerHTML + '[/nation]'
           }
         })()
         + '\nYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\n\nPlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\n\n[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\n[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
