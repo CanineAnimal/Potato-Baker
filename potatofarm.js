@@ -51,7 +51,7 @@ document.querySelector('BUTTON').onclick = function(){
       while(originalTime + 650 > (new Date()).getTime()){}; 
       request1.send();
       originalTime = (new Date()).getTime();
-      pings = request1.responseXML.querySelector('TEXT').innerHTML;
+      pings = request1.responseXML.querySelector('TEXT').innerHTML.replace('<![CDATA[', '').replace(']]>', '');
       var rezzyId = rezzy.split('=')[rezzy.split('=').length - 1];
       if(rezzyId == 'ga'){
         var request2 = new XMLHttpRequest();
