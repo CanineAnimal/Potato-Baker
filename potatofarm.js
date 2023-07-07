@@ -30,8 +30,8 @@ document.querySelector('BUTTON').onclick = function(){
 						try{
 							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
 								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
-        							cont = false;
-                						break;
+        				cont = false;
+                break;
 							}
 						}catch(e){}
 					}
@@ -111,10 +111,13 @@ document.querySelector('BUTTON').onclick = function(){
             return output_thingy;
           }else if(rezzyXml.querySelectorAll('COAUTHOR > N').length == 1){
             // There is one co-author, so list it
-            return '[b]Co-author:[/b] [nation]' + rezzyXml.querySelector('COAUTHOR > N').innerHTML + '[/nation]'
+            return '[b]Co-author:[/b] [nation]' + rezzyXml.querySelector('COAUTHOR > N').innerHTML + '[/nation]';
+          }else{
+	          // There are no co-authors
+            return '';
           }
         })()
-        + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0APlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\%0D%0A[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
+        + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0APlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A[spoiler=Notifications][quote=Notifications%3B12345]' + pings + '[/quote][/spoiler]\%0D%0A[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
       bbCode.replaceAll('  ', ' '); // Stupid NS HTML
       alert(bbCode)
     }
