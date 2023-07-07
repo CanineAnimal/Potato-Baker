@@ -93,7 +93,7 @@ document.querySelector('BUTTON').onclick = function(){
             return ' (Mild)\n' // Stupid API says 0 instead of Mild
           }else{
             // Has repeal target
-            return ' ([url=https://www.nationstates.net/page=WA_past_resolution/id=' + rezzyXml.querySelector('OPTION').innerHTML + ']target[/url])\n';
+            return ' ([url=https://www.nationstates.net/page=WA_past_resolution/id=' + (eval(rezzyXml.querySelector('OPTION').innerHTML) + 1).toString() + ']target[/url])\n';
           }
         })()
         + '[b]Author:[/b] [nation]' + rezzyXml.querySelector('PROPOSED_BY').innerHTML + '[/nation]\n'
