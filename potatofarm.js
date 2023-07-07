@@ -111,7 +111,7 @@ document.querySelector('BUTTON').onclick = function(){
             return output_thingy;
           }else if(rezzyXml.querySelectorAll('COAUTHOR > N').length == 1){
             // There is one co-author, so list it
-            return '[b]Co-author:[/b] ' + rezzyXml.querySelector('COAUTHOR > N')[0].innerHTML
+            return '[b]Co-author:[/b] ' + rezzyXml.querySelector('COAUTHOR > N').innerHTML
           }
         })()
         + '\nYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\n\nPlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\n\n[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\n[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
@@ -131,7 +131,7 @@ document.querySelector('BUTTON').onclick = function(){
       request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
       request4.send();
     }
-		// Actually execute all these functions
+    // Actually execute all these functions
 		func1(0);
     func2();
     func3();
