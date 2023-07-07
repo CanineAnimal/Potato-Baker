@@ -15,7 +15,7 @@ document.querySelector('BUTTON').onclick = function(){
 		// Define function to find last opened vote
 		function func1(offset){
 			var request = new XMLHttpRequest();
-			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=tnp_gameside_voting_box&q=messages&limit=100&offset=' + offset + '&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=tnp_gameside_voting_box&q=messages&limit=100&offset=' + offset, false);
 			// Rate limit to avoid breaking API rules
 			while(originalTime + 650 > (new Date()).getTime()){}; 
 			request.send();
@@ -47,56 +47,71 @@ document.querySelector('BUTTON').onclick = function(){
       voteId++;
       // Fetch pings
       var request1 = new XMLHttpRequest();
-      request1.open('GET', 'https://www.nationstates.net/page=dispatch/id=1904210/raw=1', false);
-      request1.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
-			while(originalTime + 650 > (new Date()).getTime()){}; 
-			request1.send();
-			originalTime = (new Date()).getTime();
-      var pings = (new DOMParser()).parseFromString(request1.responseText, 'text/html').querySelector('.dispatch > pre').innerHTML;
-      var request2 = new XMLHttpRequest();
-      request2.open('GET', rezzy, false);
-      request2.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
-      request2.send();
-			while(originalTime + 6500 > (new Date()).getTime()){}; // Rate limit is much higher as this and the previous request scrape NS proper
-			request2.send();
-      rezzyHtml = (new DOMParser()).parseFromString(request2.responseText, 'text/html')
+      request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?q=dispatch;dispatchid=1904210&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+      while(originalTime + 650 > (new Date()).getTime()){}; 
+      request1.send();
+      originalTime = (new Date()).getTime();
+      pings = request1.responseXML.querySelector('TEXT').innerHTML;
+      var rezzyId = rezzy.split('=')[rezzy.split('=').length - 1];
+      if(rezzyId == 'ga'){
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?wa=1&q=resolution&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+		    while(originalTime + 650 > (new Date()).getTime()){};
+			  request2.send();
+        rezzyXml = request2.responseXML.querySelector('RESOLUTION');
+      }else if(rezzyId == 'sc'){
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?wa=2&q=resolution&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+		    while(originalTime + 650 > (new Date()).getTime()){};
+			  request2.send();
+        rezzyXml = request2.responseXML.querySelector('RESOLUTION');
+      }else{
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?wa=0&q=proposals&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
+        request2.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
+			  while(originalTime + 650 > (new Date()).getTime()){};
+			  request2.send();
+        rezzyXml = request2.responseXML.querySelector('#' + rezzyId);
+      };
 			originalTime = (new Date()).getTime();
       // Generate BBCode for RMB post
-      bbCode = '~' + voteId + '~\n\nThere is a new [url=' + rezzy + '][u]'
-        + rezzyHtml.querySelector('.WA_rtitle').textContent.split(' ')[0] + ' '
-        + rezzyHtml.querySelector('.WA_rtitle').textContent.split(' ')[1]
-        + ' resolution[/u][/url] to vote on!\n\n[b]Resolution name:[/b] '
-        + rezzyHtml.querySelector('.WA_thing_header > h2').textContent
-        + '\n[b]' + rezzyHtml.querySelector('.WA_thing_rbox > p').textContent.replace(':', ':[/b]') + '\n'
+      bbCode = '~' + voteId + '~\n\nThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\n\n[b]Resolution name:[/b] '
+        + rezzyXml.querySelector('NAME').innerHTML
+        + '\n[b]Category:[/b]'
+        + rezzyXml.querySelector('CATEGORY').innerHTML
         + (function(){
-          // Check if SC targeted resolution
-          if(rezzyHtml.querySelectorAll('.WA_thing_rbox > p > .WA_leader')[1].textContent.indexOf('Nominee') != -1){
-            return '[b]Nominee:[/b] ' + 
-              (function(){
-                // Has nominee; check if region or nation
-                if(rezzyHtml.querySelectorAll('.WA_thing_rbox > p')[1].querySelectorAll('.nnameblock').length == 0){
-                  return '[region]' + rezzyHtml.querySelectorAll('.WA_thing_rbox > p')[1].querySelector('.rlink').textContent + '[/region]\n';
-                }else{
-                  return '[nation]' + rezzyHtml.querySelectorAll('.WA_thing_rbox > p')[1].querySelector('.nnameblock').textContent + '[/nation]\n';
-                }
-              })()
+          // Check if SC resolution has nation target
+          if(rezzyXml.querySelector('OPTION').innerHTML.split(':')[0] == 'N'){
+            return '\n[b]Nominee:[/b] [nation]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/nation]\n';
+          // Check if SC resolution has region target
+          }else if(rezzyXml.querySelector('OPTION').innerHTML.split(':')[0] == 'R'){
+            return '\n[b]Nominee:[/b] [region]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/region]\n';
+          // Check for regular AoE/strength/etc
+          }else if(isNaN(rezzyXml.querySelector('OPTION').innerHTML)){
+            return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\n'
+          }else if(rezzyXml.querySelector('OPTION').innerHTML == '0'){
+            return ' (Mild)\n' // Stupid API says 0 instead of Mild
           }else{
-            // No nominee; print just type etc
-            return '[b]' + request2.responseXML.querySelectorAll('.WA_thing_rbox > p')[1].textContent.replace(':', ':[/b]') + '\n'
+            // Has repeal target
+            return ' ([url=https://www.nationstates.net/page=WA_past_resolution/id=' + rezzyXml.querySelector('OPTION').innerHTML + ']target[/url])\n';
           }
         })()
-        + '[b]Author:[/b] [nation]' + request2.responseXML.querySelectorAll('.WA_thing_rbox > p')[2].querySelector('.nnameblock').textContent + '[/nation]\n'
+        + '[b]Author:[/b] [nation]' + rezzyXml.querySelector('PROPOSED_BY').innerHTML + '[/nation]\n'
         + (function(){
           // Check if the proposal has co-authors
-          if(request2.responseXML.querySelectorAll('.WA_thing > p > .WA_leader').length > 0){
-            // There are co-authors, so list them
-            return '[b]'
-              + request2.responseXML.querySelectorAll('.WA_thing > p')[request2.responseXML.querySelectorAll('.WA_thing > p').length - 1].textContent
-              .replace(': ', ':[/b] [nation]')
-              .replaceAll(', ', '[/nation], [nation]')
-              + '[/nation]\n';
-          }else{
-            return ''
+          if(rezzyXml.querySelectorAll('COAUTHOR > N').length > 1){
+            // There are multiple co-authors, so list them
+            output_thingy = '[b]Co-authors:[/b] ';
+            var jtem = 0;
+            while(jtem < rezzyXml.querySelectorAll('COAUTHOR > N').length - 1){
+              output_thingy += '[nation]' + rezzyXml.querySelectorAll('COAUTHOR > N')[jtem].innerHTML + '[/nation], ';
+              jtem++;
+            }
+            output_thingy += '[nation]' + rezzyXml.querySelectorAll('COAUTHOR > N')[jtem].innerHTML + '[/nation]';
+            return output_thingy;
+          }else if(rezzyXml.querySelectorAll('COAUTHOR > N').length == 1){
+            // There is one co-author, so list it
+            return '[b]Co-author:[/b] ' + rezzyXml.querySelector('COAUTHOR > N')[0].innerHTML
           }
         })()
         + '\nYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\n\nPlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\n\n[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\n[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
@@ -115,8 +130,10 @@ document.querySelector('BUTTON').onclick = function(){
       request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
       request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
       request4.send();
+    }
 		// Actually execute all these functions
 		func1(0);
-    document.querySelector('IFRAME').contentWindow.document.body.innerHTML += '<SCRIPT>func2();func3();</SCRIPT>';
+    func2();
+    func3();
   }
 }
