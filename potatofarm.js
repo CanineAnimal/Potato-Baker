@@ -126,7 +126,7 @@ document.querySelector('BUTTON').onclick = function(){
       request3.setRequestHeader('X-Password', pw);
       request3.send();
       var request4 = new XMLHttpRequest();
-      request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=greater_dienstad&c=rmbpost&text=' + bbCode + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
+      request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
       request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
       request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
       request4.send();
