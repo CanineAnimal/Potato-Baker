@@ -3,6 +3,7 @@ var originalTime = (new Date()).getTime();
 var nation;
 var rezzy;
 var pw;
+var dt;
 var offset = 0;
 var cont = true;
 // Define function to make RMB post
@@ -40,6 +41,7 @@ function func2(){
   // Generate BBCode for RMB post
   bbCode = '~' + voteId + '~\%0D%0A\%0D%0AThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\%0D%0A\%0D%0A[b]Resolution name:[/b] '
     + rezzyXml.querySelector('NAME').innerHTML
+    + '\%0D%0A[b]Debate thread:[/b] ' + dt
     + '\%0D%0A[b]Category:[/b] '
     + rezzyXml.querySelector('CATEGORY').innerHTML
     + (function(){
@@ -52,6 +54,8 @@ function func2(){
       // Check for regular AoE/strength/etc
       }else if(isNaN(rezzyXml.querySelector('OPTION').innerHTML)){
         return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\%0D%0A'
+      }else if(rezzyXml.querySelector('Category').innerHTML != 'Declaration'){
+	return '\%0D%0A'
       }else if(rezzyXml.querySelector('OPTION').innerHTML == '0'){
         return ' (Mild)\%0D%0A' // Stupid API says 0 instead of Mild
       }else{
@@ -102,12 +106,15 @@ document.querySelector('BUTTON').onclick = function(){
 	nation = document.querySelector('#NAT').value;
 	rezzy = document.querySelector('#REZZY').value;
 	pw = document.querySelector('#PW').value;
+  dt = document.querySelector('#DT').value;
 	if(!nation){
 		alert('No nation name entered.');
 	}else if(!rezzy){
 		alert('No resolution/proposal link entered.');
+  }else if(!dt){
+    alert('No debate thread entered.');
   }else if(!pw){
-    alert('No password entered!');
+    alert('No password entered.');
 	}else{
     // Find last opened vote
     while((voteId == 0) && cont){
