@@ -75,28 +75,28 @@ document.querySelector('BUTTON').onclick = function(){
       };
 			originalTime = (new Date()).getTime();
       // Generate BBCode for RMB post
-      bbCode = '~' + voteId + '~\n\nThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\n\n[b]Resolution name:[/b] '
+      bbCode = '~' + voteId + '~\\n\\nThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\\n\\n[b]Resolution name:[/b] '
         + rezzyXml.querySelector('NAME').innerHTML
-        + '\n[b]Category:[/b] '
+        + '\\n[b]Category:[/b] '
         + rezzyXml.querySelector('CATEGORY').innerHTML
         + (function(){
           // Check if SC resolution has nation target
           if(rezzyXml.querySelector('OPTION').innerHTML.split(':')[0] == 'N'){
-            return '\n[b]Nominee:[/b] [nation]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/nation]\n';
+            return '\\n[b]Nominee:[/b] [nation]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/nation]\\n';
           // Check if SC resolution has region target
           }else if(rezzyXml.querySelector('OPTION').innerHTML.split(':')[0] == 'R'){
-            return '\n[b]Nominee:[/b] [region]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/region]\n';
+            return '\\n[b]Nominee:[/b] [region]' + rezzyXml.querySelector('OPTION').innerHTML.split(':')[1] + '[/region]\\n';
           // Check for regular AoE/strength/etc
           }else if(isNaN(rezzyXml.querySelector('OPTION').innerHTML)){
-            return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\n'
+            return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\\n'
           }else if(rezzyXml.querySelector('OPTION').innerHTML == '0'){
-            return ' (Mild)\n' // Stupid API says 0 instead of Mild
+            return ' (Mild)\\n' // Stupid API says 0 instead of Mild
           }else{
             // Has repeal target
-            return ' ([url=https://www.nationstates.net/page=WA_past_resolution/id=' + (eval(rezzyXml.querySelector('OPTION').innerHTML) + 1).toString() + ']target[/url])\n';
+            return ' ([url=https://www.nationstates.net/page=WA_past_resolution/id=' + (eval(rezzyXml.querySelector('OPTION').innerHTML) + 1).toString() + ']target[/url])\\n';
           }
         })()
-        + '[b]Author:[/b] [nation]' + rezzyXml.querySelector('PROPOSED_BY').innerHTML + '[/nation]\n'
+        + '[b]Author:[/b] [nation]' + rezzyXml.querySelector('PROPOSED_BY').innerHTML + '[/nation]\\n'
         + (function(){
           // Check if the proposal has co-authors
           if(rezzyXml.querySelectorAll('COAUTHOR > N').length > 1){
@@ -114,7 +114,7 @@ document.querySelector('BUTTON').onclick = function(){
             return '[b]Co-author:[/b] [nation]' + rezzyXml.querySelector('COAUTHOR > N').innerHTML + '[/nation]'
           }
         })()
-        + '\nYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\n\nPlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\n\n[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\n[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
+        + '\\nYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\\n\\nPlease note that you should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\\n\\n[spoiler=Notifications][quote=Notifications;00000]' + pings + '[/quote][/spoiler]\\n[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
       bbCode.replaceAll('  ', ' '); // Stupid NS HTML
       alert(bbCode)
     }
