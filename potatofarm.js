@@ -55,7 +55,7 @@ function func2(){
       // Check for regular AoE/strength/etc
       }else if(isNaN(rezzyXml.querySelector('OPTION').innerHTML)){
         return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\%0D%0A'
-      }else if(rezzyXml.querySelector('CATEGORY').innerHTML != 'Declaration'){
+      }else if(rezzyXml.querySelector('CATEGORY').innerHTML == 'Declaration'){
 	      return '\%0D%0A'
       }else if(rezzyXml.querySelector('OPTION').innerHTML == '0'){
         return ' (Mild)\%0D%0A' // Stupid API says 0 instead of Mild
