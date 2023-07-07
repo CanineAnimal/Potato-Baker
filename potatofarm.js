@@ -41,7 +41,8 @@ function func2(){
   // Generate BBCode for RMB post
   bbCode = '~' + voteId + '~\%0D%0A\%0D%0AThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\%0D%0A\%0D%0A[b]Resolution name:[/b] '
     + rezzyXml.querySelector('NAME').innerHTML
-    + '\%0D%0A[b]Debate thread:[/b] ' + dt
+    + '\%0D%0A[b]Debate thread:[/b] '
+	  + dt.replaceAll('&', '\%26').replaceAll('?', '\%3F').replaceAll('=', '\%3D')
     + '\%0D%0A[b]Category:[/b] '
     + rezzyXml.querySelector('CATEGORY').innerHTML
     + (function(){
@@ -55,7 +56,7 @@ function func2(){
       }else if(isNaN(rezzyXml.querySelector('OPTION').innerHTML)){
         return ' (' + rezzyXml.querySelector('OPTION').innerHTML + ')\%0D%0A'
       }else if(rezzyXml.querySelector('Category').innerHTML != 'Declaration'){
-	return '\%0D%0A'
+	      return '\%0D%0A'
       }else if(rezzyXml.querySelector('OPTION').innerHTML == '0'){
         return ' (Mild)\%0D%0A' // Stupid API says 0 instead of Mild
       }else{
