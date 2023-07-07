@@ -15,7 +15,7 @@ document.querySelector('BUTTON').onclick = function(){
 		// Define function to find last opened vote
 		function func1(offset){
 			var request = new XMLHttpRequest();
-			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=tnp_gameside_voting_box&q=messages&limit=100&offset=' + offset, false);
+			request.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?region=tnp_gameside_voting_box&q=messages&limit=100&offset=' + offset + '&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
 			// Rate limit to avoid breaking API rules
 			while(originalTime + 650 > (new Date()).getTime()){}; 
 			request.send();
@@ -30,7 +30,7 @@ document.querySelector('BUTTON').onclick = function(){
 						try{
 							if(Number.parseInt(posts[item].innerHTML.split('~')[1]) != NaN){
 								voteId = Number.parseInt(posts[item].innerHTML.split('~')[1]);
-        				cont = false;
+                cont = false;
                 break;
 							}
 						}catch(e){}
