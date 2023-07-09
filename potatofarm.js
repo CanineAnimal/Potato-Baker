@@ -85,22 +85,50 @@ function func2(){
         return '';
       }
     })()
-    + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0ANotes,\%0D%0A-You should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! That said, ineligible voters are still free to engage in commentary or debate regarding the resolution.\%0D%0A\%0D%0A-To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A-Please only vote on one resolution per post -- to vote on multiple resolutions, make two posts with one vote on each (double posting rules do not apply here).\%0D%0A\%0D%0A[spoiler=Notifications][quote=Notifications%3B12345]' + pings + '[/quote][/spoiler]\%0D%0A[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
+    + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0ANotes,\%0D%0A-You should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! That said, ineligible voters are still free to engage in commentary or debate regarding the resolution.\%0D%0A\%0D%0A-To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A-Please only vote on one resolution per post -- to vote on multiple resolutions, make two posts with one vote on each (double posting rules do not apply here).\%0D%0A\%0D%0AINSERTNOTIFSHERE[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
   bbCode.replaceAll('  ', ' '); // Stupid NS HTML
   alert(bbCode)
 }
-// Define function to send RMB post
+// Define function to send RMB posts
 var func3 = function(){
+  // Add notifications only to BBCode for TNP Gameside Voting Box RMB
+  var bbCode1 = bbCode.replace('INSERTNOTIFSHERE', '[spoiler=Notifications][quote=Notifications%3B12345]' + pings + '[/quote][/spoiler]\%0D%0A');
+
+  // Post to TNP Gameside Voting Box
   var request3 = new XMLHttpRequest();
   request3.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=prepare', false);
   request3.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request3.setRequestHeader('X-Password', pw);
+  while(originalTime + 650 > (new Date()).getTime()){}; 
   request3.send();
-  var request4 = new XMLHttpRequest();
+  originalTime = (new Date()).getTime();
   request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
   request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
+  while(originalTime + 650 > (new Date()).getTime()){}; 
   request4.send();
+  originalTime = (new Date()).getTime();
+  
+  // Amend post content for posting to TNP RMB itself
+  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting[/region]');
+  
+  // Post to TNP RMB
+  var request5 = new XMLHttpRequest();
+  request5.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=the_north_pacific&c=rmbpost&text=' + bbCode2 + '&mode=prepare', false);
+  request5.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
+  request5.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin');
+  while(originalTime + 650 > (new Date()).getTime()){}; 
+  request5.send();
+  originalTime = (new Date()).getTime();
+  var request6 = new XMLHttpRequest();
+  request6.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=the_north_pacific&c=rmbpost&text=' + bbCode2 + '&mode=execute&token=' + request5.responseXML.querySelector('SUCCESS').innerHTML, false);
+  request6.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
+  request6.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
+  while(originalTime + 650 > (new Date()).getTime()){}; 
+  request6.send();
+  originalTime = (new Date()).getTime();
+  
+  alert('Posted to RMBs of TNP Gameside Voting Box and The North Pacific.')
 }
 document.querySelector('BUTTON').onclick = function(){
 	// Check that opening post and nation name values are entered
