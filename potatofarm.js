@@ -96,13 +96,13 @@ var func3 = function(){
 
   // Post to TNP Gameside Voting Box
   var request3 = new XMLHttpRequest();
-  request3.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=prepare', false);
+  request3.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode1 + '&mode=prepare', false);
   request3.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request3.setRequestHeader('X-Password', pw);
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request3.send();
   originalTime = (new Date()).getTime();
-  request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
+  request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode1 + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
   request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
   while(originalTime + 650 > (new Date()).getTime()){}; 
@@ -110,7 +110,7 @@ var func3 = function(){
   originalTime = (new Date()).getTime();
   
   // Amend post content for posting to TNP RMB itself
-  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).');
+  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '');
   
   // Post to TNP RMB
   var request5 = new XMLHttpRequest();
