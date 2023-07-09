@@ -110,7 +110,7 @@ var func3 = function(){
   originalTime = (new Date()).getTime();
   
   // Amend post content for posting to TNP RMB itself
-  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting[/region]');
+  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).');
   
   // Post to TNP RMB
   var request5 = new XMLHttpRequest();
