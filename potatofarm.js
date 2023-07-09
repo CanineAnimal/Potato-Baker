@@ -16,6 +16,8 @@ function func2(){
   request1.send();
   originalTime = (new Date()).getTime();
   pings = request1.responseXML.querySelector('TEXT').innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+
+  // Fetch resolution data
   var rezzyId = rezzy.split('=')[rezzy.split('=').length - 1];
   if(rezzyId == 'ga'){
     var request2 = new XMLHttpRequest();
@@ -159,13 +161,12 @@ document.querySelector('BUTTON').onclick = function(){
         cont = false;
       }else{
         for(var item = 0; item < posts.length; item++){
-          if((posts[item].querySelector('NATION').innerHTML == 'tnp_gameside_voting') && cont){
+          if(posts[item].querySelector('NATION').innerHTML == 'tnp_gameside_voting'){
             console.log(posts[item].querySelector('MESSAGE'))
             try{
               if(posts[item].querySelector('MESSAGE').innerHTML.split('~')[1] != (NaN || undefined)){
                 voteId = Number.parseInt(posts[item].querySelector('MESSAGE').innerHTML.split('~')[1]);
                 cont = false;
-                alert('Found opening post; ID ' + posts[item].innerHTML.split('~')[1]);
               }
             }catch(e){
               // Probably does not have content because of being deleted or something
@@ -173,7 +174,7 @@ document.querySelector('BUTTON').onclick = function(){
           }
         }
         // Scan previous posts if opening post is not found
-        offset += 100;
+        if(cont){offset += 100};
       }
     }
     // Actually execute all these functions
