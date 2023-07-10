@@ -104,6 +104,7 @@ var func3 = function(){
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request3.send();
   originalTime = (new Date()).getTime();
+  var request4 = new XMLHttpRequest();
   request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode1 + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
   request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
