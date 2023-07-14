@@ -120,7 +120,7 @@ var func3 = function(){
   request5.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=the_north_pacific&c=rmbpost&text=' + bbCode2 + '&mode=prepare', false);
   request5.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request5.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
-  while(originalTime + 13000 > (new Date()).getTime()){}; 
+  while(originalTime + 15000 > (new Date()).getTime()){}; 
   request5.send();
   originalTime = (new Date()).getTime();
   var request6 = new XMLHttpRequest();
