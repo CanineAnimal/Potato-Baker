@@ -6,9 +6,11 @@ var pw;
 var dt;
 var offset = 0;
 var cont = true;
+
 // Define function to make RMB post
 function func2(){
   voteId++;
+  
   // Fetch pings
   var request1 = new XMLHttpRequest();
   request1.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?q=dispatch;dispatchid=1904210&user_agent=Script Potato Baker by the Ice States in use by ' + nation, false);
@@ -87,24 +89,21 @@ function func2(){
         return '';
       }
     })()
-    + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0ANotes,\%0D%0A-You should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! That said, ineligible voters are still free to engage in commentary or debate regarding the resolution.\%0D%0A\%0D%0A-To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A-Please only vote on one resolution per post -- to vote on multiple resolutions, make multiple posts with one vote on each (double posting rules do not apply here).\%0D%0A\%0D%0AINSERTNOTIFSHERE[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
+    + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0ANotes,\%0D%0A-You should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! That said, ineligible voters are still free to engage in commentary or debate regarding the resolution.\%0D%0A\%0D%0A-To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A-Please only vote on one resolution per post -- to vote on multiple resolutions, make multiple posts with one vote on each (double posting rules do not apply here).';  
   bbCode.replaceAll('  ', ' '); // Stupid NS HTML
 }
 // Define function to send RMB posts
 var func3 = function(){
-  // Add notifications only to BBCode for TNP Gameside Voting Box RMB
-  var bbCode1 = bbCode.replace('INSERTNOTIFSHERE', '[spoiler=Notifications][quote=Notifications%3B12345]' + pings + '[/quote][/spoiler]\%0D%0A');
-
   // Post to TNP Gameside Voting Box
   var request3 = new XMLHttpRequest();
-  request3.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode1 + '&mode=prepare', false);
+  request3.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=prepare', false);
   request3.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request3.setRequestHeader('X-Password', pw);
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request3.send();
   originalTime = (new Date()).getTime();
   var request4 = new XMLHttpRequest();
-  request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode1 + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
+  request4.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=tnp_gameside_voting_box&c=rmbpost&text=' + bbCode + '&mode=execute&token=' + request3.responseXML.querySelector('SUCCESS').innerHTML, false);
   request4.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request4.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
   while(originalTime + 650 > (new Date()).getTime()){}; 
@@ -112,7 +111,7 @@ var func3 = function(){
   originalTime = (new Date()).getTime();
   
   // Amend post content for posting to TNP RMB itself
-  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '');
+  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).');
   
   alert('Posted to RMB of TNP Gameside Voting Box. Press OK or equivalent button below to post on main TNP RMB.')
 	
@@ -131,8 +130,10 @@ var func3 = function(){
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request6.send();
   originalTime = (new Date()).getTime();
-  
-  alert('Posted to RMB of The North Pacific. You may now close this tab.')
+
+  // Post telegram link
+  alert('Posted to RMB of The North Pacific. You may now close this tab, unless you are a Comms RO and want to send the telegram.')
+  document.body.innerHTML = '<A HREF="https://www.nationstates.net/page=compose_telegram?tgto=region:the_north_pacific%20%252Btag:wa&message=' + bbCode2 + '">Manual link to send telegram.</A>';
 }
 document.querySelector('BUTTON').onclick = function(){
 	// Check that opening post and nation name values are entered
