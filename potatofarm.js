@@ -134,7 +134,7 @@ var func3 = function(){
   // Post telegram link
   alert('Posted to RMB of The North Pacific. You may now close this tab, unless you are a Comms RO and want to send the telegram.')
   bbCode3 = bbCode2.replaceAll('"', '%22') + '\%0D%0A\%0D%0A[i]Please telegram [nation]Magecastle Embassy Building A5[/nation] to be excluded from these telegrams.[/i]';
-  document.body.innerHTML = '<A HREF="https://www.nationstates.net/page=compose_telegram?tgto=region:the_north_pacific%20%252Btag:wa-nation:plembobria,-nation:votak_matim,-nation:zazumo,-nation:comfed,-nation:waupun_island,-nation:magecastle_embassy_building_a5,-nation:francois_isidore&message=' + bbCode3 + '">Manual link to send telegram.</A>';
+  document.body.innerHTML = '<A HREF="https://www.nationstates.net/page=compose_telegram?tgto=region:the_north_pacific,%2Btag:wa,-nation:plembobria,-nation:votak_matim,-nation:zazumo,-nation:comfed,-nation:waupun_island,-nation:magecastle_embassy_building_a5,-nation:francois_isidore&message=' + bbCode3 + '">Manual link to send telegram.</A>';
 }
 document.querySelector('BUTTON').onclick = function(){
 	// Check that opening post and nation name values are entered
