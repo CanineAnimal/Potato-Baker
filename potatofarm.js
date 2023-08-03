@@ -113,7 +113,7 @@ var func3 = function(){
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request4.send();
   originalTime = (new Date()).getTime();
-  alert('Posted to TNP Gameside Voting Box. Posting to main TNP RMB...\n\Do not close this tab.')
+  alert('Posted to TNP Gameside Voting Box. Posting to main TNP RMB...\n\nDo not close this tab.')
   
   // Amend post content for posting to TNP RMB itself
   bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '');
