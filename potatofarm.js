@@ -132,7 +132,7 @@ var func3 = function(){
   request6.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
   request6.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
   while(originalTime + 650 > (new Date()).getTime()){}; 
-  request5.send();
+  request6.send();
   originalTime = (new Date()).getTime();
   alert('Posted to RMB of The North Pacific. You may now close this tab.')
 }
