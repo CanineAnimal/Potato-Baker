@@ -47,7 +47,7 @@ function func2(){
   bbCode = '~' + voteId + '~\%0D%0A\%0D%0AThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\%0D%0A\%0D%0A[b]Resolution name:[/b] '
     + rezzyXml.querySelector('NAME').innerHTML
     + '\%0D%0A[b]Debate thread:[/b] '
-	  + dt.replaceAll('&', '\%26').replaceAll('?', '\%3F').replaceAll('=', '\%3D').replaceAll(';', '%3B').replaceAll('\n', '%0D%0A');
+    + dt.replaceAll('&', '\%26').replaceAll('?', '\%3F').replaceAll('=', '\%3D').replaceAll(';', '%3B').replaceAll('\n', '%0D%0A')
     + '\%0D%0A[b]Category:[/b] '
     + rezzyXml.querySelector('CATEGORY').innerHTML
     + (function(){
@@ -92,7 +92,6 @@ function func2(){
     })()
     + '\%0D%0AYou are encouraged to cast a vote, or simply debate the resolution and its merits, by posting in this Regional Message Board below!\%0D%0A\%0D%0ANotes,\%0D%0A-You should not vote if you have voted on the WAA Forum (https://forum.thenorthpacific.org/forum/39609/). Only votes from current TNP WA nations will be counted! That said, ineligible voters are still free to engage in commentary or debate regarding the resolution.\%0D%0A\%0D%0A-To ensure that your vote is properly counted, add (without the quotes) "~' + voteId + ' For", "~' + voteId + ' Against", "~' + voteId + ' Abstain", or "~' + voteId + ' Present" to the very first line of your post, according to how you want your vote to be counted.\%0D%0A\%0D%0A-Please only vote on one resolution per post -- to vote on multiple resolutions, make multiple posts with one vote on each (double posting rules do not apply here).\%0D%0A\%0D%0AINSERTNOTIFSHERE[i]Telegram [nation]The Ice States[/nation] to be notified of future WA votes![/i]';  
   bbCode.replaceAll('  ', ' '); // Stupid NS HTML
-  alert(bbCode)
 }
 // Define function to send RMB posts
 var func3 = function(){
@@ -114,7 +113,7 @@ var func3 = function(){
   while(originalTime + 650 > (new Date()).getTime()){}; 
   request4.send();
   originalTime = (new Date()).getTime();
-  alert('Posted to TNP Gameside Voting Box. Posting to main TNP RMB...\n\nDo not close this tab.')
+  alert('Posted to TNP Gameside Voting Box. Preparing post to main TNP RMB...\n\nDo not close this tab.')
   
   // Amend post content for posting to TNP RMB itself
   bbCode2 = 'Hey all! What do you think about the proposal [url=' + rezzy + ']' + rezzyXml.querySelector('NAME').innerHTML + '[/url] coming up soon ([url=' + dt + `]debate thread here[/url])?
