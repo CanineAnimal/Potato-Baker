@@ -46,7 +46,7 @@ function func2(){
   bbCode = '~' + voteId + '~\%0D%0A\%0D%0AThere is a new [url=' + rezzy + '][u]resolution[/u][/url] to vote on!\%0D%0A\%0D%0A[b]Resolution name:[/b] '
     + rezzyXml.querySelector('NAME').innerHTML
     + '\%0D%0A[b]Debate thread:[/b] '
-	  + dt.replaceAll('&', '\%26').replaceAll('?', '\%3F').replaceAll('=', '\%3D')
+	  + dt.replaceAll('&', '\%26').replaceAll('?', '\%3F').replaceAll('=', '\%3D').replaceAll(';', '%3B').replaceAll('\n', '%0D%0A');
     + '\%0D%0A[b]Category:[/b] '
     + rezzyXml.querySelector('CATEGORY').innerHTML
     + (function(){
@@ -116,25 +116,10 @@ var func3 = function(){
   alert('Posted to TNP Gameside Voting Box. Posting to main TNP RMB...\n\nDo not close this tab.')
   
   // Amend post content for posting to TNP RMB itself
-  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '');
+  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '').replaceAll('\%26', '&').replaceAll('\%3F', '?').replaceAll('\%3D', '=').replaceAll('%3B', ';').replaceAll('%0D%0A', '\n');
   
-  // Post to TNP RMB
-  var request5 = new XMLHttpRequest();
-  request5.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=the_north_pacific&c=rmbpost&text=' + bbCode2 + '&mode=prepare', false);
-  request5.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
-  request5.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
-  while(originalTime + 45000 > (new Date()).getTime()){}; 
-  request5.send();
-  originalTime = (new Date()).getTime();
-	
-  var request6 = new XMLHttpRequest();
-  request6.open('GET', 'https://www.nationstates.net/cgi-bin/api.cgi?c=rmbpost&nation=tnp_gameside_voting&region=the_north_pacific&c=rmbpost&text=' + bbCode2 + '&mode=execute&token=' + request5.responseXML.querySelector('SUCCESS').innerHTML, false);
-  request6.setRequestHeader('User-Agent', 'Script Potato Baker by the Ice States in use by ' + nation);
-  request6.setRequestHeader('X-Pin', request3.getResponseHeader('x-pin'));
-  while(originalTime + 650 > (new Date()).getTime()){}; 
-  request6.send();
-  originalTime = (new Date()).getTime();
-  alert('Posted to RMB of The North Pacific. You may now close this tab.')
+  // Generate post to TNP RMB
+  document.body.innerHTML = 'Copy the content in the textbox below into TNP\'s RMB (link: <A HREF="https://www.nationstates.net/page=display_region_rmb/region=the_north_pacific">here</A>). <STRONG>Once you have done so, feel free to close this tab.</STRONG><BR/><BR/><TEXTAREA>' + bbCode2.replaceAll('', '');
 }
 document.querySelector('BUTTON').onclick = function(){
 	// Check that opening post and nation name values are entered
