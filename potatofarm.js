@@ -1,5 +1,6 @@
 var voteId = 0;
 var originalTime = (new Date()).getTime();
+var rezzyXml;
 var nation;
 var rezzy;
 var pw;
@@ -116,7 +117,9 @@ var func3 = function(){
   alert('Posted to TNP Gameside Voting Box. Posting to main TNP RMB...\n\nDo not close this tab.')
   
   // Amend post content for posting to TNP RMB itself
-  bbCode2 = bbCode.replace('this Regional Message Board below', 'the Regional Message board of [region]TNP Gameside Voting Box[/region]').replace('do not apply here).', 'do not apply there).').replace('INSERTNOTIFSHERE', '').replaceAll('\%26', '&').replaceAll('\%3F', '?').replaceAll('\%3D', '=').replaceAll('%3B', ';').replaceAll('%0D%0A', '\n');
+  bbCode2 = 'Hey all! What do you think about the proposal [url=' + rezzy + ']' + rezzyXml.querySelector('NAME').innerHTML + '[/url] coming up soon ([url=' + dt + `]debate thread here[/url])?
+
+If you're a WA member, you can have your vote on the resolution counted by following the instructions on the RMB of [region]TNP Gameside Voting Box[/region]. If you're not in the WA, feel free to debate the proposal on that RMB! :D`
   
   // Generate post to TNP RMB
   document.body.innerHTML = 'Copy the content in the textbox below into TNP\'s RMB (link: <A HREF="https://www.nationstates.net/page=display_region_rmb/region=the_north_pacific">here</A>). <STRONG>Once you have done so, feel free to close this tab.</STRONG><BR/><BR/><TEXTAREA>' + bbCode2.replaceAll('', '');
