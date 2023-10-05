@@ -120,7 +120,7 @@ var func3 = function(){
 
 If you're a WA member, you can have your vote on the resolution counted by following the instructions on the RMB of [region]TNP Gameside Voting Box[/region]. If you're not in the WA, feel free to debate the proposal on that RMB! :D
 
-Do note that for your vote to be counted you'd have to follow the instructions on the RMB of [region]TNP Gameside Voting Box -- likewise I think it's best for debate to also go there, so that other voters can see it easier.`
+Do note that for your vote to be counted you'd have to follow the instructions on the RMB of [region]TNP Gameside Voting Box[/region] -- likewise I think it's best for debate to also go there, so that other voters can see it easier.`
   
   // Generate post to TNP RMB
   document.body.innerHTML = 'Copy the content in the textbox below into TNP\'s RMB (link: <A HREF="https://www.nationstates.net/page=display_region_rmb/region=the_north_pacific">here</A>). <STRONG>Once you have done so, feel free to close this tab.</STRONG><BR/><BR/><TEXTAREA>' + bbCode2.replaceAll('', '');
